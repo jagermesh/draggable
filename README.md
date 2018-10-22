@@ -1,4 +1,4 @@
-# Draggable.
+# Draggable
 
 Simple, lightweight pure JavaScript component that adds a draggable functionality.
 
