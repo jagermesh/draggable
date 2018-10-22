@@ -28,8 +28,8 @@ There are also some settings which you can pass to constructor
 
 ~~~
 {
-  handler: selector,
-  ondrag: function
+    handler: selector,
+    ondrag: function
 }
 ~~~
 
