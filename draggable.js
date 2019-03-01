@@ -17,6 +17,8 @@ function makeDraggable(ctrl, options) {
   }
 
   function setPosition(element, left, top) {
+    element.style.marginTop = '0px';
+    element.style.marginLeft = '0px';
     element.style.left = left + 'px';
     element.style.top = top + 'px';
   }
@@ -24,6 +26,7 @@ function makeDraggable(ctrl, options) {
   var drg_h, drg_w, pos_y, pos_x, ofs_x, ofs_y;
 
   ctrl.style.cursor = 'move';
+  ctrl.style.position = 'fixed';
 
   function downHandler(e) {
     var target = e.target || e.srcElement;
@@ -52,7 +55,7 @@ function makeDraggable(ctrl, options) {
       var pageX = e.pageX || e.touches[0].pageX;
       var pageY = e.pageY || e.touches[0].pageY;
       var left = pageX - pos_x - ofs_x - document.body.scrollLeft;
-      var top  = pageY - pos_y - ofs_y  - document.body.scrollTop;
+      var top  = pageY - pos_y - ofs_y - document.body.scrollTop;
 
       setPosition(dragObject, left, top);
       if (options.ondrag) {
@@ -98,7 +101,9 @@ function makeDraggable(ctrl, options) {
 if (jQuery) {
   (function($) {
     $.fn.makeDraggable = function(options) {
-      makeDraggable(this[0], options);
+      if (this.length > 0) {
+        makeDraggable(this[0], options);
+      }
       return this;
     };
   })(jQuery);
