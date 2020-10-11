@@ -5,10 +5,10 @@ if (jQuery) {
 
     function makeDraggable(ctrl, options) {
 
-      var _this = this;
+      const _this = this;
 
-      var dragObject = null;
-      var dragHandler = null;
+      let dragObject = null;
+      let dragHandler = null;
 
       options = options || {};
       options.exclude = [ 'INPUT', 'TEXTAREA', 'SELECT', 'A', 'BUTTON' ];
@@ -26,21 +26,21 @@ if (jQuery) {
         element.style.top = top + 'px';
       }
 
-      var drg_h, drg_w, pos_y, pos_x, ofs_x, ofs_y;
+      let drg_h, drg_w, pos_y, pos_x, ofs_x, ofs_y;
 
       ctrl.style.cursor = 'move';
       ctrl.style.position = 'fixed';
 
       function downHandler(e) {
-        var target = e.target || e.srcElement;
-        var parent = target.parentNode;
+        const target = e.target || e.srcElement;
+        const parent = target.parentNode;
 
         if (target && (options.exclude.indexOf(target.tagName.toUpperCase()) == -1)) {
           if (!parent || (options.exclude.indexOf(parent.tagName.toUpperCase()) == -1)) {  // img in a
             dragObject = ctrl;
 
-            var pageX = e.pageX || e.touches[0].pageX;
-            var pageY = e.pageY || e.touches[0].pageY;
+            let pageX = e.pageX || e.touches[0].pageX;
+            let pageY = e.pageY || e.touches[0].pageY;
 
             ofs_x = dragObject.getBoundingClientRect().left - dragObject.offsetLeft;
             ofs_y = dragObject.getBoundingClientRect().top  - dragObject.offsetTop;
@@ -55,10 +55,19 @@ if (jQuery) {
 
       function moveHandler(e) {
         if (dragObject !== null) {
-          var pageX = e.pageX || e.touches[0].pageX;
-          var pageY = e.pageY || e.touches[0].pageY;
-          var left = pageX - pos_x - ofs_x - document.body.scrollLeft;
-          var top  = pageY - pos_y - ofs_y - document.body.scrollTop;
+          const pageX = e.pageX || e.touches[0].pageX;
+          const pageY = e.pageY || e.touches[0].pageY;
+          let left = pageX - pos_x - ofs_x - document.body.scrollLeft;
+          let top  = pageY - pos_y - ofs_y - document.body.scrollTop;
+          if (top < 0) {
+            top = 0;
+          }
+          if (top > window.innerHeight) {
+            top = window.innerHeight - 40;
+          }
+          if (left < 0) {
+            left = 0;
+          }
 
           setPosition(dragObject, left, top);
           if (options.ondrag) {
